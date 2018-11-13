@@ -1,0 +1,25 @@
+{
+    "user": {
+        "login": {
+            "username": "mkhahamyan",
+            "password": "my$super*password",
+            "email": "stephane.khahamyan@gmail.com"
+        },
+        "identity": {
+            "firstName": "Massis",
+            "lastName": "Khahamyan"
+        },
+        "contact": {
+            "phoneNumber": "096 699 339",
+            "company": {
+                "name": "EGS",
+                "address": {
+                    "city": "Erevan",
+                    "street": "Abelyan",
+                    "number": "6/1"
+                }
+            }
+        }
+    },
+    "knowledges": []
+}
