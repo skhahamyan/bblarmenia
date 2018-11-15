@@ -27,7 +27,6 @@ class SpeakerTest {
     void speaker_should_be_able_to_add_knowledge() {
         speaker.addKnowledge(createKnowledge());
         assertEquals(speaker.getKnowledges().size(), 1);
-        System.out.println(speaker);
     }
 
     @Test

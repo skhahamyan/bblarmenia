@@ -17,7 +17,12 @@ public class Application {
         final ServletContextHandler servletContextHandler = new ServletContextHandler(NO_SESSIONS);
         configureServletContext(server, servletContextHandler);
         addApiContext(servletContextHandler);
+        sandboxMethod();
         startServer(server);
+    }
+
+    private static void sandboxMethod() {
+        System.out.println("Not playing right now");
     }
 
     private static void configureServletContext(Server server, ServletContextHandler servletContextHandler) {

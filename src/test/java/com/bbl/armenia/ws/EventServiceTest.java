@@ -1,7 +1,5 @@
 package com.bbl.armenia.ws;
 
-import com.bbl.armenia.company.Address;
-import com.bbl.armenia.company.Contact;
 import com.bbl.armenia.tools.TestTools;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
