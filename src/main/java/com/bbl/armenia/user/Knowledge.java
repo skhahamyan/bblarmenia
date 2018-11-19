@@ -6,6 +6,9 @@ public class Knowledge {
     private String title;
     private String description;
 
+    public Knowledge() {
+    }
+
     public Knowledge(String title, String description) {
         this.title = title;
         this.description = description;

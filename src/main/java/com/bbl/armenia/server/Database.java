@@ -22,7 +22,7 @@ public class Database {
     private static Optional<DSLContext> connect() {
         try {
             Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            return Optional.of(DSL.using(connection, SQLDialect.HSQLDB));
+            return Optional.of(DSL.using(connection, SQLDialect.MYSQL));
         } catch (SQLException e) {
             LOGGER.error("Error occurred while getting HSQLDB connection", e);
         }

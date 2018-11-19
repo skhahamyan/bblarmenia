@@ -17,6 +17,9 @@ public class Speaker implements Serializable {
     private List<Knowledge> knowledges;
     private Company company;
 
+    public Speaker() {
+    }
+
     public Speaker(User user) {
         this.user = user;
         this.knowledges = new ArrayList<>();

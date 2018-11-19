@@ -6,6 +6,9 @@ public class Identity {
     private String firstName;
     private String lastName;
 
+    public Identity() {
+    }
+
     public Identity(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;

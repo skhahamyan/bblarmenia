@@ -12,6 +12,16 @@ public class Credential implements Serializable {
     private String email;
     private String phoneNumber;
 
+    public Credential() {
+    }
+
+    public Credential(String username, String password, String email, String phoneNumber) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
     public String getUsername() {
         return username;
     }

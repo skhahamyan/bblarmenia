@@ -10,6 +10,9 @@ public class Company implements Serializable {
     private String name;
     private Contact contact;
 
+    public Company() {
+    }
+
     public Company(String name, Contact contact) {
         this.name = name;
         this.contact = contact;

@@ -10,6 +10,14 @@ public class User implements Serializable {
     private Credential credential;
     private Identity identity;
 
+    public User() {
+    }
+
+    public User(Credential credential, Identity identity) {
+        this.credential = credential;
+        this.identity = identity;
+    }
+
     public Credential getCredential() {
         return credential;
     }
