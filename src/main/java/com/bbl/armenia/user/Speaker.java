@@ -1,5 +1,6 @@
 package com.bbl.armenia.user;
 
+import com.bbl.armenia.company.Company;
 import com.bbl.armenia.tools.TextTool;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ public class Speaker implements Serializable {
 
     private User user;
     private List<Knowledge> knowledges;
+    private Company company;
 
     public Speaker(User user) {
         this.user = user;
@@ -21,16 +23,20 @@ public class Speaker implements Serializable {
         return user;
     }
 
-    public void addKnowledge(Knowledge knowledge) {
+    void addKnowledge(Knowledge knowledge) {
         knowledges.add(knowledge);
     }
 
-    public boolean isSpeaker() {
+    boolean isSpeaker() {
         return !knowledges.isEmpty();
     }
 
-    public List<Knowledge> getKnowledges() {
+    List<Knowledge> getKnowledges() {
         return knowledges;
+    }
+
+    public Company getCompany() {
+        return company;
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.bbl.armenia.tools.TextTool;
 
 import java.io.Serializable;
 
-public class Login implements Serializable {
+public class Credential implements Serializable {
     private static final long serialVersionUID = 1752442737185356929L;
 
     private String username;

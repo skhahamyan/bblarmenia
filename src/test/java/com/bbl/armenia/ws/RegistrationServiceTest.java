@@ -20,6 +20,6 @@ public class RegistrationServiceTest extends JerseyTest {
     public void login_service_should_display_login() {
         Response response = target("registration").request().get();
         assertEquals(TestTools.HTTP_CODE_OK, response.getStatus());
-        assertEquals("Login", response.readEntity(String.class));
+        assertEquals("Credential", response.readEntity(String.class));
     }
 }

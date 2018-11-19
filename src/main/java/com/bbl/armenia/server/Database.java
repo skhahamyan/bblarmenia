@@ -14,9 +14,9 @@ import java.util.Optional;
 public class Database {
     private static final Logger LOGGER = LoggerFactory.getLogger(Database.class);
 
-    private static final String URL = "jdbc:hsqldb:file:database\\bblarmenia";
-    private static final String USER = "bbl";
-    private static final String PASSWORD = "$*n8psBLvUk*u8vv";
+    private static final String URL = "jdbc:mysql://localhost/bblarmenia";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
     private static final Optional<DSLContext> JOOQ = connect();
 
     private static Optional<DSLContext> connect() {

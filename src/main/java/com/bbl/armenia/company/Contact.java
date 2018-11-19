@@ -1,7 +1,5 @@
 package com.bbl.armenia.company;
 
-import com.bbl.armenia.company.Address;
-import com.bbl.armenia.company.Company;
 import com.bbl.armenia.tools.TextTool;
 
 import java.io.Serializable;

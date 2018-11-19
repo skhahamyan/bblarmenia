@@ -10,6 +10,6 @@ public class RegistrationService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String login() {
-        return "Login";
+        return "Credential";
     }
 }
