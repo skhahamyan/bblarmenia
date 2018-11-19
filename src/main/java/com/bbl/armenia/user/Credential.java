@@ -10,6 +10,7 @@ public class Credential implements Serializable {
     private String username;
     private String password;
     private String email;
+    private String phoneNumber;
 
     public String getUsername() {
         return username;
@@ -21,6 +22,10 @@ public class Credential implements Serializable {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     @Override
