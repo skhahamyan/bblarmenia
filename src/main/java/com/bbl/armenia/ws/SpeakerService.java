@@ -1,14 +1,10 @@
 package com.bbl.armenia.ws;
 
+import com.bbl.armenia.queries.*;
+import com.bbl.armenia.tools.InjectionTool;
 import com.bbl.armenia.user.Speaker;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
@@ -17,6 +13,8 @@ import static javax.ws.rs.core.Response.Status.OK;
 
 @Path("speaker")
 public class SpeakerService {
+    QueryService<Speaker> queryService = InjectionTool.USER.getInstance(QueryService.class);
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllSpeakers() {
@@ -27,7 +25,7 @@ public class SpeakerService {
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     public int createSpeaker(Speaker speaker) {
-        speaker.create();
+        queryService.create(speaker);
         return CREATED.getStatusCode();
     }
 
@@ -39,7 +37,15 @@ public class SpeakerService {
             return BAD_REQUEST.getStatusCode();
         }
 
-        speaker.update(id);
+        queryService.update(id, speaker);
+        return OK.getStatusCode();
+    }
+
+    @DELETE
+    @Path("/delete/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public int deleteSpeaker(@PathParam("id") Long id) {
+        queryService.delete(id);
         return OK.getStatusCode();
     }
 }

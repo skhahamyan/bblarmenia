@@ -1,8 +1,5 @@
 package com.bbl.armenia.server;
 
-import com.bbl.armenia.sandbox.BBLArmenia;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -20,12 +17,7 @@ public class Application {
         final ServletContextHandler servletContextHandler = new ServletContextHandler(NO_SESSIONS);
         configureServletContext(server, servletContextHandler);
         addApiContext(servletContextHandler);
-        sandboxMethod();
         startServer(server);
-    }
-
-    private static void sandboxMethod() {
-        Injector injector = Guice.createInjector(new BBLArmenia());
     }
 
     private static void configureServletContext(Server server, ServletContextHandler servletContextHandler) {
