@@ -52,6 +52,19 @@ public class Speaker implements Serializable {
                 .execute();
     }
 
+    public void update(Long id) {
+        Identity identity = user.getIdentity();
+        Database.getJOOQ().update(SPEAKER)
+                .set(SPEAKER.FIRST_NAME, identity.getFirstName())
+                .set(SPEAKER.LAST_NAME, identity.getLastName())
+                .where(SPEAKER.ID.eq(id))
+                .execute();
+    }
+
+    public boolean validationFails() {
+        return Validation.fails(this);
+    }
+
     @Override
     public String toString() {
         return TextTool.GSON.toJson(this);

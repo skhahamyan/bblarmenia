@@ -5,10 +5,15 @@ import com.bbl.armenia.user.Speaker;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+import static javax.ws.rs.core.Response.Status.CREATED;
+import static javax.ws.rs.core.Response.Status.OK;
 
 @Path("speaker")
 public class SpeakerService {
@@ -21,8 +26,20 @@ public class SpeakerService {
     @POST
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSpeaker(Speaker speaker) {
+    public int createSpeaker(Speaker speaker) {
         speaker.create();
-        return Response.status(201).entity(Response.ok()).build();
+        return CREATED.getStatusCode();
+    }
+
+    @PUT
+    @Path("/update/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public int updateSpeaker(@PathParam("id") Long id, Speaker speaker) {
+        if (speaker.validationFails()) {
+            return BAD_REQUEST.getStatusCode();
+        }
+
+        speaker.update(id);
+        return OK.getStatusCode();
     }
 }
