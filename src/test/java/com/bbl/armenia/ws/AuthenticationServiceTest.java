@@ -10,15 +10,15 @@ import javax.ws.rs.core.Response;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RegistrationServiceTest extends JerseyTest {
+public class AuthenticationServiceTest extends JerseyTest {
     @Override
     protected Application configure() {
-        return new ResourceConfig(RegistrationService.class);
+        return new ResourceConfig(AuthenticationService.class);
     }
 
     @Test
     public void login_service_should_display_login() {
-        Response response = target("registration").request().get();
+        Response response = target("authentication").request().get();
         assertEquals(TestTools.HTTP_CODE_OK, response.getStatus());
         assertEquals("Credential", response.readEntity(String.class));
     }

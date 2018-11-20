@@ -1,5 +1,6 @@
 package com.bbl.armenia.ws;
 
+import com.bbl.armenia.authentication.Secured;
 import com.bbl.armenia.queries.*;
 import com.bbl.armenia.tools.InjectionTool;
 import com.bbl.armenia.user.Speaker;
@@ -22,6 +23,7 @@ public class SpeakerService {
     }
 
     @POST
+    @Secured
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     public int createSpeaker(Speaker speaker) {
@@ -30,6 +32,7 @@ public class SpeakerService {
     }
 
     @PUT
+    @Secured
     @Path("/update/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public int updateSpeaker(@PathParam("id") Long id, Speaker speaker) {
@@ -42,6 +45,7 @@ public class SpeakerService {
     }
 
     @DELETE
+    @Secured
     @Path("/delete/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public int deleteSpeaker(@PathParam("id") Long id) {
