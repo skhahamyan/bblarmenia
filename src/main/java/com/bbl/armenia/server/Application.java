@@ -28,7 +28,7 @@ public class Application {
     private static void addApiContext(ServletContextHandler servletContextHandler) {
         ServletHolder servletHolder = servletContextHandler.addServlet(ServletContainer.class, "/api/*");
         servletHolder.setInitOrder(0);
-        servletHolder.setInitParameter("jersey.config.server.provider.packages", "com.bbl.armenia.ws");
+        servletHolder.setInitParameter("jersey.config.server.provider.packages", "com.bbl.armenia.service");
     }
 
     private static void startServer(Server server) {

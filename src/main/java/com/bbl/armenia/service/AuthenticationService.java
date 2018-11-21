@@ -1,4 +1,4 @@
-package com.bbl.armenia.ws;
+package com.bbl.armenia.service;
 
 import com.bbl.armenia.server.Database;
 import com.bbl.armenia.user.Credential;

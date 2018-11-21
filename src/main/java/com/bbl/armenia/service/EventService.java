@@ -1,4 +1,4 @@
-package com.bbl.armenia.ws;
+package com.bbl.armenia.service;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
