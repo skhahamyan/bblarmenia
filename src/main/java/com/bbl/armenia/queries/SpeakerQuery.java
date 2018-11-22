@@ -7,6 +7,10 @@ import com.bbl.armenia.user.Speaker;
 import static org.jooq.generated.tables.Speaker.SPEAKER;
 
 public class SpeakerQuery implements ReadOperation, WriteOperation<Speaker>, PurgeOperation {
+    public SpeakerQuery() {
+        // Test needs default constructor
+    }
+
     @Override
     public void getAll() {
 
