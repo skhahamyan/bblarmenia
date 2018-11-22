@@ -8,6 +8,7 @@ import com.google.inject.Singleton;
 import com.google.inject.servlet.ServletModule;
 import com.sun.jersey.api.core.ResourceConfig;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
+import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 
 public class RestModule extends ServletModule {
     private final ResourceConfig resourceConfig;
@@ -26,23 +27,24 @@ public class RestModule extends ServletModule {
             bind(resource);
         }
 
+        bind(JacksonJsonProvider.class).in(Singleton.class);
         serve("/api/*").with(GuiceContainer.class);
     }
 
     private void bindUserOperations() {
-        bind(ReadOperation.class).annotatedWith(User.class).to(SpeakerQuery.class).in(Singleton.class);
-        bind(WriteOperation.class).annotatedWith(User.class).to(SpeakerQuery.class).in(Singleton.class);
-        bind(PurgeOperation.class).annotatedWith(User.class).to(SpeakerQuery.class).in(Singleton.class);
+        bind(ReadOperation.class).annotatedWith(User.class).to(SpeakerQuery.class);
+        bind(WriteOperation.class).annotatedWith(User.class).to(SpeakerQuery.class);
+        bind(PurgeOperation.class).annotatedWith(User.class).to(SpeakerQuery.class);
     }
 
     private void bindCompanyOperations() {
-        bind(ReadOperation.class).annotatedWith(Company.class).to(CompanyQuery.class).in(Singleton.class);
-        bind(WriteOperation.class).annotatedWith(Company.class).to(CompanyQuery.class).in(Singleton.class);
-        bind(PurgeOperation.class).annotatedWith(Company.class).to(CompanyQuery.class).in(Singleton.class);
+        bind(ReadOperation.class).annotatedWith(Company.class).to(CompanyQuery.class);
+        bind(WriteOperation.class).annotatedWith(Company.class).to(CompanyQuery.class);
+        bind(PurgeOperation.class).annotatedWith(Company.class).to(CompanyQuery.class);
     }
 
     private void bindEventOperations() {
-        bind(ReadOperation.class).annotatedWith(Event.class).to(EventQuery.class).in(Singleton.class);
-        bind(WriteOperation.class).annotatedWith(Event.class).to(EventQuery.class).in(Singleton.class);
+        bind(ReadOperation.class).annotatedWith(Event.class).to(EventQuery.class);
+        bind(WriteOperation.class).annotatedWith(Event.class).to(EventQuery.class);
     }
 }

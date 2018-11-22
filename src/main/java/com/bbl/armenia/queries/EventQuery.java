@@ -1,7 +1,9 @@
 package com.bbl.armenia.queries;
 
 import com.bbl.armenia.event.Event;
+import com.google.inject.Singleton;
 
+@Singleton
 public class EventQuery implements ReadOperation, WriteOperation<Event> {
     @Override
     public void getAll() {

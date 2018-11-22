@@ -3,9 +3,11 @@ package com.bbl.armenia.queries;
 import com.bbl.armenia.server.Database;
 import com.bbl.armenia.user.Identity;
 import com.bbl.armenia.user.Speaker;
+import com.google.inject.Singleton;
 
 import static org.jooq.generated.tables.Speaker.SPEAKER;
 
+@Singleton
 public class SpeakerQuery implements ReadOperation, WriteOperation<Speaker>, PurgeOperation {
     public SpeakerQuery() {
         // Test needs default constructor

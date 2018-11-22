@@ -2,6 +2,7 @@ package com.bbl.armenia.service;
 
 import com.bbl.armenia.server.Database;
 import com.bbl.armenia.user.Credential;
+import com.google.inject.Singleton;
 import org.jooq.generated.tables.records.CredentialRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import static org.jooq.generated.tables.Credential.CREDENTIAL;
 
+@Singleton
 @Path("authentication")
 public class AuthenticationService {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationService.class);
