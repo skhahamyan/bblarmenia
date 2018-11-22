@@ -32,12 +32,12 @@ public class SpeakerQuery implements ReadOperation, WriteOperation<Speaker>, Pur
     }
 
     @Override
-    public void update(Long id, Speaker speaker) {
+    public void update(Speaker speaker) {
         Identity identity = speaker.getUser().getIdentity();
         Database.getJOOQ().update(SPEAKER)
                 .set(SPEAKER.FIRST_NAME, identity.getFirstName())
                 .set(SPEAKER.LAST_NAME, identity.getLastName())
-                .where(SPEAKER.ID.eq(id))
+                .where(SPEAKER.ID.eq(speaker.getId()))
                 .execute();
     }
 

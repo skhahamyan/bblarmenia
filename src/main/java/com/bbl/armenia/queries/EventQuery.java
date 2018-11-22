@@ -21,7 +21,7 @@ public class EventQuery implements ReadOperation, WriteOperation<Event> {
     }
 
     @Override
-    public void update(Long id, Event speaker) {
+    public void update(Event speaker) {
 
     }
 }

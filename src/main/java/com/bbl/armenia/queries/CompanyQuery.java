@@ -21,7 +21,7 @@ public class CompanyQuery implements ReadOperation, WriteOperation<Speaker>, Pur
     }
 
     @Override
-    public void update(Long id, Speaker model) {
+    public void update(Speaker model) {
 
     }
 

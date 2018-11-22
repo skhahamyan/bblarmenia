@@ -1,11 +1,7 @@
 package com.bbl.armenia.service;
 
 import com.bbl.armenia.authentication.Secured;
-import com.bbl.armenia.queries.PurgeOperation;
-import com.bbl.armenia.queries.WriteOperation;
-import com.bbl.armenia.tools.User;
 import com.bbl.armenia.user.Speaker;
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import javax.ws.rs.Consumes;
@@ -17,23 +13,17 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.Objects;
 
-import static javax.ws.rs.core.Response.Status.*;
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+import static javax.ws.rs.core.Response.Status.CREATED;
+import static javax.ws.rs.core.Response.Status.OK;
 
 @Singleton
 @Path("speaker")
 public class SpeakerService {
-    private WriteOperation<Speaker> writeOperation;
-    private PurgeOperation purgeOperation;
-
     public SpeakerService() {
         // Test needs default constructor
-    }
-
-    @Inject
-    public SpeakerService(@User WriteOperation writeOperation, @User PurgeOperation purgeOperation) {
-        this.writeOperation = writeOperation;
-        this.purgeOperation = purgeOperation;
     }
 
     @GET
@@ -48,21 +38,32 @@ public class SpeakerService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public int createSpeaker(Speaker speaker) {
-        writeOperation.create(speaker);
+        Objects.requireNonNull(speaker);
+
+        try {
+            speaker.create();
+        } catch (Exception e) {
+            return BAD_REQUEST.getStatusCode();
+        }
+
         return CREATED.getStatusCode();
     }
 
     @PUT
     @Secured
-    @Path("/update/{id}")
+    @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public int updateSpeaker(@PathParam("id") Long id, Speaker speaker) {
-        if (speaker.validationFails()) {
+    public int updateSpeaker(Speaker speaker) {
+        Objects.requireNonNull(speaker);
+        Objects.requireNonNull(speaker.getId());
+
+        try {
+            speaker.update();
+        } catch (Exception e) {
             return BAD_REQUEST.getStatusCode();
         }
 
-        writeOperation.update(id, speaker);
         return OK.getStatusCode();
     }
 
@@ -72,7 +73,9 @@ public class SpeakerService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public int deleteSpeaker(@PathParam("id") Long id) {
-        purgeOperation.delete(id);
+        Objects.requireNonNull(id);
+        Speaker deleteSpeaker = new Speaker(id);
+        deleteSpeaker.delete();
         return OK.getStatusCode();
     }
 }
