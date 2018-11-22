@@ -2,7 +2,7 @@ package com.bbl.armenia.user;
 
 import com.bbl.armenia.company.Company;
 import com.bbl.armenia.queries.SpeakerQuery;
-import com.bbl.armenia.server.GuiceInjector;
+import com.bbl.armenia.server.Injection;
 import com.bbl.armenia.tools.TextTool;
 
 import java.io.Serializable;
@@ -12,7 +12,7 @@ import java.util.List;
 public class Speaker implements Serializable {
     private static final long serialVersionUID = 1722348904803550083L;
 
-    private SpeakerQuery speakerQuery = GuiceInjector.injector().getInstance(SpeakerQuery.class);
+    private SpeakerQuery speakerQuery = Injection.getInstance(SpeakerQuery.class);
     private Long id;
     private User user;
     private List<Knowledge> knowledges;
