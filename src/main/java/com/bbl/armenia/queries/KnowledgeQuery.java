@@ -30,10 +30,10 @@ public class KnowledgeQuery implements ReadOperation<Knowledge>, WriteOperation<
         return QueryMappers.map(knowledgeRecord);
     }
 
-    public Result<KnowledgeRecord> getBySpeakerId(Long speakerId) {
-        Result<KnowledgeRecord> knowledges = Database.getJOOQ().selectFrom(KNOWLEDGE)
+    public List<Knowledge> getBySpeakerId(Long speakerId) {
+        Result<KnowledgeRecord> knowledgeRecords = Database.getJOOQ().selectFrom(KNOWLEDGE)
                 .where(KNOWLEDGE.SPEAKER_ID.eq(speakerId)).fetch();
-        return knowledges;
+        return knowledgeRecords.stream().map(QueryMappers::map).collect(Collectors.toList());
     }
 
     @Override

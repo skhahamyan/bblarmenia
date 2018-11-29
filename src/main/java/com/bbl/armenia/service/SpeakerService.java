@@ -42,6 +42,13 @@ public class SpeakerService {
         return knowledgeQuery.getAll().toString();
     }
 
+    @GET
+    @Path("/knowledge/{speakerId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getKnowledgesBySpeaker(@PathParam("speakerId") Long speakerId) {
+        return knowledgeQuery.getBySpeakerId(speakerId).toString();
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
