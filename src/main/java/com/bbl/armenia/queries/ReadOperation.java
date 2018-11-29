@@ -1,6 +1,8 @@
 package com.bbl.armenia.queries;
 
-public interface ReadOperation {
-    void getAll();
-    void getById();
+import java.util.List;
+
+public interface ReadOperation<T> {
+    List<T> getAll();
+    T getById(Long id);
 }

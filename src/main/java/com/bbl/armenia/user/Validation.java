@@ -7,6 +7,10 @@ class Validation {
         return speaker == null || fails(speaker.getUser());
     }
 
+    static boolean fails(Knowledge knowledge) {
+        return StringUtils.isBlank(knowledge.getTitle()) || StringUtils.isBlank(knowledge.getDescription());
+    }
+
     private static boolean fails(User user) {
         return user == null || fails(user.getIdentity());
     }

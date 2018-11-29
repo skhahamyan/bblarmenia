@@ -3,24 +3,30 @@ package com.bbl.armenia.queries;
 import com.bbl.armenia.server.Database;
 import com.bbl.armenia.user.Identity;
 import com.bbl.armenia.user.Speaker;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
+import java.util.List;
 
 import static org.jooq.generated.tables.Speaker.SPEAKER;
 
 @Singleton
-public class SpeakerQuery implements ReadOperation, WriteOperation<Speaker>, PurgeOperation {
+public class SpeakerQuery implements ReadOperation<Speaker>, WriteOperation<Speaker>, PurgeOperation {
+    @Inject
+    KnowledgeQuery knowledgeQuery;
+
     public SpeakerQuery() {
         // Test needs default constructor
     }
 
     @Override
-    public void getAll() {
-
+    public List<Speaker> getAll() {
+        return null;
     }
 
     @Override
-    public void getById() {
-
+    public Speaker getById(Long id) {
+        return null;
     }
 
     @Override
@@ -43,6 +49,7 @@ public class SpeakerQuery implements ReadOperation, WriteOperation<Speaker>, Pur
 
     @Override
     public void delete(Long id) {
+        knowledgeQuery.deleteBySpeakerId(id);
         Database.getJOOQ().delete(SPEAKER)
                 .where(SPEAKER.ID.eq(id))
                 .execute();

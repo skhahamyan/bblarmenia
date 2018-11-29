@@ -4,6 +4,7 @@ import com.bbl.armenia.company.Company;
 import com.bbl.armenia.queries.SpeakerQuery;
 import com.bbl.armenia.server.Injection;
 import com.bbl.armenia.tools.TextTool;
+import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,10 +13,15 @@ import java.util.List;
 public class Speaker implements Serializable {
     private static final long serialVersionUID = 1722348904803550083L;
 
-    private SpeakerQuery speakerQuery = Injection.getInstance(SpeakerQuery.class);
+    private final SpeakerQuery speakerQuery = Injection.getInstance(SpeakerQuery.class);
+
+    @Expose
     private Long id;
+    @Expose
     private User user;
+    @Expose
     private List<Knowledge> knowledges;
+    @Expose
     private Company company;
 
     public Speaker() {
@@ -39,15 +45,11 @@ public class Speaker implements Serializable {
         return user;
     }
 
-    void addKnowledge(Knowledge knowledge) {
-        knowledges.add(knowledge);
-    }
-
     boolean isSpeaker() {
         return !knowledges.isEmpty();
     }
 
-    List<Knowledge> getKnowledges() {
+    public List<Knowledge> getKnowledges() {
         return knowledges;
     }
 
@@ -73,6 +75,16 @@ public class Speaker implements Serializable {
 
     public void delete() {
         speakerQuery.delete(id);
+    }
+
+    public void addKnowledge() throws Exception {
+        if (knowledges.size() < 1) {
+            throw new Exception();
+        }
+
+        for (Knowledge knowledge : knowledges) {
+            knowledge.create(id);
+        }
     }
 
     private boolean validationFails() {

@@ -1,6 +1,7 @@
 package com.bbl.armenia.service;
 
-import com.bbl.armenia.authentication.Secured;
+import com.bbl.armenia.queries.KnowledgeQuery;
+import com.bbl.armenia.server.Injection;
 import com.bbl.armenia.user.Speaker;
 import com.google.inject.Singleton;
 
@@ -22,6 +23,8 @@ import static javax.ws.rs.core.Response.Status.OK;
 @Singleton
 @Path("speaker")
 public class SpeakerService {
+    private final KnowledgeQuery knowledgeQuery = Injection.getInstance(KnowledgeQuery.class);
+
     public SpeakerService() {
         // Test needs default constructor
     }
@@ -32,9 +35,14 @@ public class SpeakerService {
         return "Got it !";
     }
 
+    @GET
+    @Path("/knowledge")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAllKnowledges() {
+        return knowledgeQuery.getAll().toString();
+    }
+
     @POST
-    @Secured
-    @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public int createSpeaker(Speaker speaker) {
@@ -49,9 +57,24 @@ public class SpeakerService {
         return CREATED.getStatusCode();
     }
 
+    @POST
+    @Path("/knowledge")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public int createKnowledge(Speaker speaker) {
+        Objects.requireNonNull(speaker);
+        Objects.requireNonNull(speaker.getKnowledges());
+
+        try {
+            speaker.addKnowledge();
+        } catch (Exception e) {
+            return BAD_REQUEST.getStatusCode();
+        }
+
+        return CREATED.getStatusCode();
+    }
+
     @PUT
-    @Secured
-    @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public int updateSpeaker(Speaker speaker) {
@@ -68,9 +91,7 @@ public class SpeakerService {
     }
 
     @DELETE
-    @Secured
-    @Path("/delete/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public int deleteSpeaker(@PathParam("id") Long id) {
         Objects.requireNonNull(id);
