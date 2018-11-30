@@ -81,8 +81,6 @@ CREATE TABLE `credential` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT NULL,
   `user_password` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone_number` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -191,6 +189,8 @@ CREATE TABLE `speaker` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(255) DEFAULT NULL,
   `credential_id` bigint(20) DEFAULT NULL,
   `company_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),

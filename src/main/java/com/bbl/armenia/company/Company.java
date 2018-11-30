@@ -7,15 +7,27 @@ import java.io.Serializable;
 public class Company implements Serializable {
     private static final long serialVersionUID = 4510078668878462629L;
 
+    private Long id;
     private String name;
     private Contact contact;
 
     public Company() {
+        // Default constructor
     }
 
-    public Company(String name, Contact contact) {
+    public Company(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Company(Long id, String name, Contact contact) {
+        this.id = id;
         this.name = name;
         this.contact = contact;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

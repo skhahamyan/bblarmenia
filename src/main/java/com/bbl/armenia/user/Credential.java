@@ -1,25 +1,28 @@
 package com.bbl.armenia.user;
 
 import com.bbl.armenia.tools.TextTool;
+import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 
 public class Credential implements Serializable {
     private static final long serialVersionUID = 1752442737185356929L;
 
+    @Expose
     private String username;
     private String password;
-    private String email;
-    private String phoneNumber;
 
     public Credential() {
+        // Default constructor
     }
 
-    public Credential(String username, String password, String email, String phoneNumber) {
+    public Credential(String username) {
+        this.username = username;
+    }
+
+    public Credential(String username, String password) {
         this.username = username;
         this.password = password;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
     }
 
     public String getUsername() {
@@ -28,14 +31,6 @@ public class Credential implements Serializable {
 
     public String getPassword() {
         return password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
     }
 
     @Override

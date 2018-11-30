@@ -1,8 +1,6 @@
 package com.bbl.armenia.user;
 
 import com.bbl.armenia.company.Company;
-import com.bbl.armenia.queries.SpeakerQuery;
-import com.bbl.armenia.server.Injection;
 import com.bbl.armenia.tools.TextTool;
 import com.google.gson.annotations.Expose;
 
@@ -12,8 +10,6 @@ import java.util.List;
 
 public class Speaker implements Serializable {
     private static final long serialVersionUID = 1722348904803550083L;
-
-    private final SpeakerQuery speakerQuery = Injection.getInstance(SpeakerQuery.class);
 
     @Expose
     private Long id;
@@ -57,38 +53,8 @@ public class Speaker implements Serializable {
         return company;
     }
 
-    public void create() throws Exception {
-        if (validationFails()) {
-            throw new Exception();
-        }
-
-        speakerQuery.create(this);
-    }
-
-    public void update() throws Exception {
-        if (validationFails()) {
-            throw new Exception();
-        }
-
-        speakerQuery.update(this);
-    }
-
-    public void delete() {
-        speakerQuery.delete(id);
-    }
-
-    public void addKnowledge() throws Exception {
-        if (knowledges.size() < 1) {
-            throw new Exception();
-        }
-
-        for (Knowledge knowledge : knowledges) {
-            knowledge.create(id);
-        }
-    }
-
-    private boolean validationFails() {
-        return Validation.fails(this);
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     @Override
