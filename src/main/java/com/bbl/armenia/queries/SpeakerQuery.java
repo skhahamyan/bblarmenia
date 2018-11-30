@@ -2,11 +2,13 @@ package com.bbl.armenia.queries;
 
 import com.bbl.armenia.server.Database;
 import com.bbl.armenia.service.SpeakerRequest;
+import com.bbl.armenia.user.Knowledge;
 import com.bbl.armenia.user.Speaker;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SelectJoinStep;
 import org.jooq.TableField;
 import org.jooq.generated.tables.records.SpeakerRecord;
 
@@ -29,18 +31,22 @@ public class SpeakerQuery implements ReadOperation<Speaker>, WriteOperation<Spea
 
     @Override
     public List<Speaker> getAll() {
-        Result<Record> speakerRecords = Database.getJOOQ().select()
-                .from(SPEAKER)
-                .leftJoin(COMPANY).onKey()
-                .leftJoin(CREDENTIAL).onKey()
-                .fetch();
-
+        Result<Record> speakerRecords = selectJoinStep().fetch();
         return speakerRecords.stream().map(QueryMappers::mapSpeaker).collect(Collectors.toList());
     }
 
     @Override
     public Speaker getById(Long id) {
-        return null;
+        Record speakerRecord = selectJoinStep().where(SPEAKER.ID.eq(id)).fetchOne();
+        return speakerRecord.map(QueryMappers::mapSpeaker);
+    }
+
+    public Speaker getByIdWithKnowledges(Long id) {
+        Record speakerRecord = selectJoinStep().where(SPEAKER.ID.eq(id)).fetchOne();
+        Speaker speaker = speakerRecord.map(QueryMappers::mapSpeaker);
+        List<Knowledge> knowledges = knowledgeQuery.getBySpeakerId(id);
+        speaker.addKnowledges(knowledges);
+        return speaker;
     }
 
     @Override
@@ -71,5 +77,12 @@ public class SpeakerQuery implements ReadOperation<Speaker>, WriteOperation<Spea
         Database.getJOOQ().delete(SPEAKER)
                 .where(SPEAKER.ID.eq(id))
                 .execute();
+    }
+
+    private SelectJoinStep<Record> selectJoinStep() {
+        return Database.getJOOQ().select()
+                .from(SPEAKER)
+                .leftJoin(COMPANY).onKey()
+                .leftJoin(CREDENTIAL).onKey();
     }
 }

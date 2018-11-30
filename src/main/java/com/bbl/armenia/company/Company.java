@@ -1,14 +1,18 @@
 package com.bbl.armenia.company;
 
 import com.bbl.armenia.tools.TextTool;
+import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 
 public class Company implements Serializable {
     private static final long serialVersionUID = 4510078668878462629L;
 
+    @Expose
     private Long id;
+    @Expose
     private String name;
+    @Expose
     private Contact contact;
 
     public Company() {

@@ -2,17 +2,19 @@ package com.bbl.armenia.event;
 
 import com.bbl.armenia.company.Company;
 import com.bbl.armenia.tools.TextTool;
+import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public class Meeting implements Serializable {
     private static final long serialVersionUID = 1231554748187356198L;
 
+    @Expose
     private Company company;
-    private LocalDateTime date;
+    @Expose
+    private String date;
 
-    public Meeting(Company company, LocalDateTime date) {
+    public Meeting(Company company, String date) {
         this.company = company;
         this.date = date;
     }
@@ -21,7 +23,7 @@ public class Meeting implements Serializable {
         return company;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 

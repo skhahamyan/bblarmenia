@@ -1,10 +1,14 @@
 package com.bbl.armenia.company;
 
 import com.bbl.armenia.tools.TextTool;
+import com.google.gson.annotations.Expose;
 
 public class Address {
+    @Expose
     private String city;
+    @Expose
     private String street;
+    @Expose
     private String number;
 
     public Address() {

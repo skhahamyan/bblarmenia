@@ -103,15 +103,15 @@ DROP TABLE IF EXISTS `event`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `event` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `meeting_id` bigint(20) DEFAULT NULL,
   `speaker_id` bigint(20) DEFAULT NULL,
   `knowledge_id` bigint(20) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `meeting_date` datetime,
+  `event_canceled` boolean DEFAULT FALSE,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `ux_event_meeting_id` (`meeting_id`),
   UNIQUE KEY `ux_event_speaker_id` (`speaker_id`),
   KEY `fk_event_knowledge_id` (`knowledge_id`),
   CONSTRAINT `fk_event_knowledge_id` FOREIGN KEY (`knowledge_id`) REFERENCES `knowledge` (`id`),
-  CONSTRAINT `fk_event_meeting_id` FOREIGN KEY (`meeting_id`) REFERENCES `meeting` (`id`),
   CONSTRAINT `fk_event_speaker_id` FOREIGN KEY (`speaker_id`) REFERENCES `speaker` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -150,32 +150,6 @@ CREATE TABLE `knowledge` (
 LOCK TABLES `knowledge` WRITE;
 /*!40000 ALTER TABLE `knowledge` DISABLE KEYS */;
 /*!40000 ALTER TABLE `knowledge` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `meeting`
---
-
-DROP TABLE IF EXISTS `meeting`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `meeting` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `meeting_date` datetime,
-  `company_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_meeting_company_id` (`company_id`),
-  CONSTRAINT `fk_meeting_company_id` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `meeting`
---
-
-LOCK TABLES `meeting` WRITE;
-/*!40000 ALTER TABLE `meeting` DISABLE KEYS */;
-/*!40000 ALTER TABLE `meeting` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

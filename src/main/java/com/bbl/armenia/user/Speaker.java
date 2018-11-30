@@ -29,12 +29,12 @@ public class Speaker implements Serializable {
         this.knowledges = new ArrayList<>();
     }
 
-    public Speaker(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public User getUser() {
@@ -47,6 +47,10 @@ public class Speaker implements Serializable {
 
     public List<Knowledge> getKnowledges() {
         return knowledges;
+    }
+
+    public void addKnowledges(List<Knowledge> knowledges) {
+        this.knowledges.addAll(knowledges);
     }
 
     public Company getCompany() {

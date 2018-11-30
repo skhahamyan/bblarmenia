@@ -5,17 +5,9 @@ import com.bbl.armenia.queries.SpeakerQuery;
 import com.bbl.armenia.server.Injection;
 import com.google.inject.Singleton;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.CREATED;
 import static javax.ws.rs.core.Response.Status.OK;
 
@@ -42,16 +34,18 @@ public class SpeakerService {
         return speakerQuery.getById(id).toString();
     }
 
+    @GET
+    @Path("/{id}/include-knowledges")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getSpeakerByIdWithKnowledges(@PathParam("id") Long id) {
+        return speakerQuery.getByIdWithKnowledges(id).toString();
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public int createSpeaker(SpeakerRequest speakerRequest) {
-        try {
-            speakerQuery.create(speakerRequest);
-        } catch (Exception e) {
-            return BAD_REQUEST.getStatusCode();
-        }
-
+        speakerQuery.create(speakerRequest);
         return CREATED.getStatusCode();
     }
 
@@ -59,12 +53,7 @@ public class SpeakerService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public int updateSpeaker(SpeakerRequest speakerRequest) {
-        try {
-            speakerQuery.update(speakerRequest);
-        } catch (Exception e) {
-            return BAD_REQUEST.getStatusCode();
-        }
-
+        speakerQuery.update(speakerRequest);
         return OK.getStatusCode();
     }
 
@@ -84,7 +73,7 @@ public class SpeakerService {
     }
 
     @GET
-    @Path("/knowledge/{speakerId}")
+    @Path("/{speakerId}/knowledge")
     @Produces(MediaType.APPLICATION_JSON)
     public String getKnowledgesBySpeaker(@PathParam("speakerId") Long speakerId) {
         return knowledgeQuery.getBySpeakerId(speakerId).toString();
@@ -95,12 +84,24 @@ public class SpeakerService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public int createKnowledge(KnowledgeRequest knowledgeRequest) {
-        try {
-            knowledgeQuery.create(knowledgeRequest);
-        } catch (Exception e) {
-            return BAD_REQUEST.getStatusCode();
-        }
-
+        knowledgeQuery.create(knowledgeRequest);
         return CREATED.getStatusCode();
+    }
+
+    @PUT
+    @Path("/knowledge")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public int updateKnowledge(KnowledgeRequest knowledgeRequest) {
+        knowledgeQuery.update(knowledgeRequest);
+        return OK.getStatusCode();
+    }
+
+    @DELETE
+    @Path("/knowledge/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public int deleteKnowledge(@PathParam("id") Long id) {
+        knowledgeQuery.delete(id);
+        return OK.getStatusCode();
     }
 }
