@@ -134,7 +134,7 @@
                 </executions>
                 <configuration>
                     <jdbc>
-                        <driver>com.mysql.jdbc.Driver</driver>
+                        <driver>com.mysql.cj.jdbc.Driver</driver>
                         <url>jdbc:mysql://localhost/bblarmenia</url>
                         <user>root</user>
                         <password>root</password>

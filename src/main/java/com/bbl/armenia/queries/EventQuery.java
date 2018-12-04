@@ -36,8 +36,7 @@ public class EventQuery implements ReadOperation<Event>, WriteOperation<EventReq
     @Override
     public void create(EventRequest eventRequest) {
         Database.getJOOQ().insertInto(EVENT, EVENT.SPEAKER_ID, EVENT.KNOWLEDGE_ID, EVENT.COMPANY_ID, EVENT.MEETING_DATE)
-                .values(1L, eventRequest.getKnowledgeId(),
-                        eventRequest.getCompanyId(), eventRequest.getMeetingDate())
+                .values(1L, eventRequest.getKnowledgeId(), eventRequest.getCompanyId(), eventRequest.getMeetingDate())
                 .execute();
     }
 

@@ -31,7 +31,7 @@ public class EventService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public int createSpeaker(EventRequest eventRequest) {
+    public int createEvent(EventRequest eventRequest) {
         eventQuery.create(eventRequest);
         return CREATED.getStatusCode();
     }
@@ -39,16 +39,15 @@ public class EventService {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public int updateSpeaker(EventRequest eventRequest) {
+    public int updateEvent(EventRequest eventRequest) {
         eventQuery.update(eventRequest);
         return OK.getStatusCode();
     }
 
     @PUT
     @Path("/{id}/cancel")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public int cancelEvent(Long id) {
+    public int cancelEvent(@PathParam("id") Long id) {
         eventQuery.cancel(id);
         return OK.getStatusCode();
     }
