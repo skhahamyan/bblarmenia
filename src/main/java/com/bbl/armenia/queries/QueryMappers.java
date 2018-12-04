@@ -46,7 +46,7 @@ class QueryMappers {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.of("Asia/Yerevan"));
 
         Company company = new Company(record.get(COMPANY.ID), record.get(COMPANY.NAME));
-        Meeting meeting = new Meeting(company, TextTool.formatDate(localDateTime));
+        Meeting meeting = new Meeting(company, TextTool.fromDateToString(localDateTime));
         Knowledge knowledge = new Knowledge(record.get(KNOWLEDGE.TITLE), record.get(KNOWLEDGE.DESCRIPTION));
         Event event = new Event(meeting, knowledge);
         return event;

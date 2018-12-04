@@ -1,7 +1,10 @@
 package com.bbl.armenia.service;
 
+import com.bbl.armenia.tools.TextTool;
+
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class EventRequest implements Serializable {
     private static final long serialVersionUID = 7610314109371498120L;
@@ -10,7 +13,7 @@ public class EventRequest implements Serializable {
     private Long speakerId;
     private Long knowledgeId;
     private Long companyId;
-    private Date meetingDate;
+    private String meetingDate;
 
     public EventRequest() {
         // Default constructor
@@ -32,7 +35,8 @@ public class EventRequest implements Serializable {
         return companyId;
     }
 
-    public Date getMeetingDate() {
-        return meetingDate;
+    public Timestamp getMeetingDate() {
+        LocalDateTime localDateTime = TextTool.fromStringToDate(meetingDate);
+        return Timestamp.valueOf(localDateTime);
     }
 }
