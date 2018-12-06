@@ -103,16 +103,19 @@ DROP TABLE IF EXISTS `event`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `event` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `organizer_id` bigint(20) DEFAULT NULL,
   `speaker_id` bigint(20) DEFAULT NULL,
   `knowledge_id` bigint(20) DEFAULT NULL,
   `company_id` bigint(20) DEFAULT NULL,
   `meeting_date` datetime,
+  `event_accepted` boolean DEFAULT FALSE,
   `event_canceled` boolean DEFAULT FALSE,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `ux_event_speaker_id` (`speaker_id`),
   KEY `fk_event_knowledge_id` (`knowledge_id`),
+  CONSTRAINT `fk_event_organizer_id` FOREIGN KEY (`organizer_id`) REFERENCES `speaker` (`id`),
+  CONSTRAINT `fk_event_speaker_id` FOREIGN KEY (`speaker_id`) REFERENCES `speaker` (`id`),
   CONSTRAINT `fk_event_knowledge_id` FOREIGN KEY (`knowledge_id`) REFERENCES `knowledge` (`id`),
-  CONSTRAINT `fk_event_speaker_id` FOREIGN KEY (`speaker_id`) REFERENCES `speaker` (`id`)
+  CONSTRAINT `fk_event_company_id` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

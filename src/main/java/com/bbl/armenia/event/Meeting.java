@@ -13,6 +13,10 @@ public class Meeting implements Serializable {
     private Company company;
     @Expose
     private String date;
+    @Expose
+    private boolean accepted;
+    @Expose
+    private boolean canceled;
 
     public Meeting(Company company, String date) {
         this.company = company;
@@ -25,6 +29,22 @@ public class Meeting implements Serializable {
 
     public String getDate() {
         return date;
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 
     @Override

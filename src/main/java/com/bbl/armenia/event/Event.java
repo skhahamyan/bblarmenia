@@ -13,6 +13,8 @@ public class Event implements Serializable {
     @Expose
     private Meeting meeting;
     @Expose
+    private Speaker organizer;
+    @Expose
     private Speaker speaker;
     @Expose
     private Knowledge knowledge;
@@ -24,6 +26,18 @@ public class Event implements Serializable {
 
     public Meeting getMeeting() {
         return meeting;
+    }
+
+    public void setMeeting(Meeting meeting) {
+        this.meeting = meeting;
+    }
+
+    public Speaker getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(Speaker organizer) {
+        this.organizer = organizer;
     }
 
     public Speaker getSpeaker() {

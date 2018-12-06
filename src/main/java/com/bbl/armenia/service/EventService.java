@@ -22,6 +22,13 @@ public class EventService {
     }
 
     @GET
+    @Path("/speaker/{speakerId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAllEventsBySpeakerId(@PathParam("speakerId") Long speakerId) {
+        return eventQuery.getAllBySpeakerId(speakerId).toString();
+    }
+
+    @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getEventById(@PathParam("id") Long id) {
@@ -41,6 +48,14 @@ public class EventService {
     @Produces(MediaType.APPLICATION_JSON)
     public int updateEvent(EventRequest eventRequest) {
         eventQuery.update(eventRequest);
+        return OK.getStatusCode();
+    }
+
+    @PUT
+    @Path("/{id}/accept")
+    @Produces(MediaType.APPLICATION_JSON)
+    public int acceptEvent(@PathParam("id") Long id) {
+        eventQuery.accept(id);
         return OK.getStatusCode();
     }
 

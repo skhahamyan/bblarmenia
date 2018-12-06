@@ -14,55 +14,68 @@ import java.util.stream.Collectors;
 import static org.jooq.generated.tables.Company.COMPANY;
 import static org.jooq.generated.tables.Event.EVENT;
 import static org.jooq.generated.tables.Knowledge.KNOWLEDGE;
-import static org.jooq.generated.tables.Speaker.SPEAKER;
 
 @Singleton
 public class EventQuery implements ReadOperation<Event>, WriteOperation<EventRequest> {
     @Override
     public List<Event> getAll() {
-        Result<Record> eventRecords = selectJoinStep().where(SPEAKER.ID.eq(1L))
-                .and(EVENT.EVENT_CANCELED.isFalse()).fetch();
+        Result<Record> eventRecords = selectJoinStep().where(EVENT.ORGANIZER_ID.eq(1L)).fetch();
+        return eventRecords.stream().map(QueryMappers::mapEvent).collect(Collectors.toList());
+    }
+
+    public List<Event> getAllBySpeakerId(Long speakerId) {
+        Result<Record> eventRecords = selectJoinStep().where(EVENT.SPEAKER_ID.eq(speakerId)).fetch();
         return eventRecords.stream().map(QueryMappers::mapEvent).collect(Collectors.toList());
     }
 
     @Override
     public Event getById(Long id) {
-        Record eventRecord = selectJoinStep().where(SPEAKER.ID.eq(1L))
-                .and(EVENT.ID.eq(id))
-                .and(EVENT.EVENT_CANCELED.isFalse()).fetchOne();
+        Record eventRecord = selectJoinStep().where(EVENT.ID.eq(id)).fetchOne();
         return QueryMappers.mapEvent(eventRecord);
     }
 
     @Override
     public void create(EventRequest eventRequest) {
-        Database.getJOOQ().insertInto(EVENT, EVENT.SPEAKER_ID, EVENT.KNOWLEDGE_ID, EVENT.COMPANY_ID, EVENT.MEETING_DATE)
-                .values(1L, eventRequest.getKnowledgeId(), eventRequest.getCompanyId(), eventRequest.getMeetingDate())
+        Database.getJOOQ().insertInto(EVENT)
+                .set(EVENT.ORGANIZER_ID, 1L)
+                .set(EVENT.SPEAKER_ID, eventRequest.getSpeakerId())
+                .set(EVENT.KNOWLEDGE_ID, eventRequest.getKnowledgeId())
+                .set(EVENT.COMPANY_ID, eventRequest.getCompanyId())
+                .set(EVENT.MEETING_DATE, eventRequest.getMeetingDate())
                 .execute();
     }
 
     @Override
     public void update(EventRequest eventRequest) {
-        // TODO only event creator or speaker can update
         Database.getJOOQ().update(EVENT)
                 .set(EVENT.MEETING_DATE, eventRequest.getMeetingDate())
                 .where(EVENT.ID.eq(eventRequest.getId()))
+                .and(EVENT.ORGANIZER_ID.eq(1L).or(EVENT.SPEAKER_ID.eq(eventRequest.getSpeakerId())))
+                .and(EVENT.EVENT_CANCELED.isFalse())
+                .execute();
+    }
+
+    public void accept(Long id) {
+        Database.getJOOQ().update(EVENT)
+                .set(EVENT.EVENT_ACCEPTED, Byte.valueOf("1"))
+                .where(EVENT.ID.eq(id))
+                .and(EVENT.SPEAKER_ID.eq(1L))
                 .and(EVENT.EVENT_CANCELED.isFalse())
                 .execute();
     }
 
     public void cancel(Long id) {
-        // TODO only event creator or speaker can update
         Database.getJOOQ().update(EVENT)
                 .set(EVENT.EVENT_CANCELED, Byte.valueOf("1"))
                 .where(EVENT.ID.eq(id))
-                .and(EVENT.EVENT_CANCELED.isFalse())
+                .and(EVENT.ORGANIZER_ID.eq(1L))
+                .and(EVENT.EVENT_ACCEPTED.isFalse())
                 .execute();
     }
 
     private SelectJoinStep<Record> selectJoinStep() {
         return Database.getJOOQ().select()
                 .from(EVENT)
-                .leftJoin(SPEAKER).onKey()
                 .leftJoin(KNOWLEDGE).onKey()
                 .leftJoin(COMPANY).onKey();
     }

@@ -47,6 +47,8 @@ class QueryMappers {
 
         Company company = new Company(record.get(COMPANY.ID), record.get(COMPANY.NAME));
         Meeting meeting = new Meeting(company, TextTool.fromDateToString(localDateTime));
+        meeting.setAccepted(record.get(EVENT.EVENT_ACCEPTED, Boolean.class));
+        meeting.setCanceled(record.get(EVENT.EVENT_CANCELED, Boolean.class));
         Knowledge knowledge = new Knowledge(record.get(KNOWLEDGE.TITLE), record.get(KNOWLEDGE.DESCRIPTION));
         Event event = new Event(meeting, knowledge);
         return event;
